@@ -1,0 +1,12 @@
+[Unit]
+After=network.target
+Description=Development Telegram Bot
+
+[Service]
+Type=simple
+WorkingDirectory=/develop/tg-dev-bot/
+ExecStart=/usr/bin/python3 bot.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
