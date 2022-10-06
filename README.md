@@ -4,7 +4,7 @@ Telegram Bot with several features.
 
 
 ## Quickstart
-You must run ```python setup.py``` to create environment variables needed by the bot, or create a ```.env``` file and defining the following variables:
+You must run ```python env_setup.py``` to create environment variables needed by the bot, or create a ```.env``` file and defining the following variables:
 
 - ```TELEGRAM_BOT=<telegram_bot_token>```
 - ```ALERTS_CHANNEL=<alert_channel_token>```
