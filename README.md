@@ -16,9 +16,18 @@ You must run ```python env_setup.py``` to create environment variables needed by
 ## Installation
 
 ### Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
+
+## Creating environment variables file
+
+```bash
+python env_setup.py
+```
+
+Follow screen instructions
 
 ## Usage
 
