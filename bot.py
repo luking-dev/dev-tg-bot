@@ -5,7 +5,7 @@ from tgbot.filters.admin_filter import AdminFilter
 from tgbot.handlers.admin import admin_user, test, mic,\
      photo, photo_torch, photo_nightvision, photo_dual,\
      enable_torch, disable_torch, nightvision_on, nightvision_off,\
-     screenshot, send_file, callback_test
+     screenshot, send_file, callback_test, start_video, stop_video
 from tgbot.handlers.spam_command import anti_spam
 from tgbot.handlers.user import any_user, cancel, youtube2mp3, dm,\
      qr, qr_kind_content, qr_wifi_encryption, qr_wifi,\
@@ -62,6 +62,8 @@ def register_handlers():
     bot.register_message_handler(qr, commands=["qr"], admin=True, pass_bot=True)
     bot.register_message_handler(youtube2mp3, commands=["youtube2mp3"], admin=True, pass_bot=True)
     bot.register_message_handler(send_file, commands=["send_file"], admin=True, pass_bot=True)
+    bot.register_message_handler(start_video, commands=["start_video"], admin=True, pass_bot=True)
+    bot.register_message_handler(stop_video, commands=["stop_video"], admin=True, pass_bot=True)
 
     # non-privileges required
     bot.register_message_handler(dm, commands=["dm"], admin=False, pass_bot=True)

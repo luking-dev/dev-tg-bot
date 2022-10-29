@@ -80,6 +80,14 @@ def photo_dual(message: Message, bot: TeleBot):
     photo(message)
     photo_nightvision(message)
 
+def start_video(message: Message, bot: TeleBot):
+    cam.record_video(True)
+    bot.reply_to(message, "Recording video...")
+
+def stop_video(message: Message, bot: TeleBot):
+    cam.record_video(False)
+    bot.reply_to(message, "Video record stopped")
+
 def mic(message: Message, bot: TeleBot):
     data["voice_message"] = message.id
     markup = types.ForceReply(selective=False)
