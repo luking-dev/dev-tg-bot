@@ -47,6 +47,6 @@ def nightvision(state=True):
 
 def record_video(state=True):
     if state:
-        requests.get(urljoin(WEBCAM_BASE, "startvideo"), auth=HTTPBasicAuth(WEBCAM_USER, WEBCAM_PASSWORD))
+        requests.get(urljoin(WEBCAM_BASE, "startvideo?force=1&tag=rec"), auth=HTTPBasicAuth(WEBCAM_USER, WEBCAM_PASSWORD))
     else:
         requests.get(urljoin(WEBCAM_BASE, "stopvideo"), auth=HTTPBasicAuth(WEBCAM_USER, WEBCAM_PASSWORD))
