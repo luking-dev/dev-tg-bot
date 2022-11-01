@@ -23,6 +23,8 @@ pip install -r requirements.txt
 
 ## Creating environment variables file
 
+You must run ```env_setup.py``` to generate a ```.env``` file which contains useful data:
+
 ```bash
 python env_setup.py
 ```
