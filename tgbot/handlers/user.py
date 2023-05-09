@@ -1,11 +1,12 @@
+import os
+import urllib.parse
+from ..config import data, BASE_DIR
 from telebot import TeleBot, logger
 from telebot.types import Message, CallbackQuery
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from telebot import types
-from addons import yt2mp3, qr as qrlib, datamatrix
-from ..config import data, BASE_DIR
-import urllib.parse
-import os
+from addons import yt2mp3, qr as qrlib, datamatrix, bc, latex as tex
+from barcode.writer import ImageWriter
 
 def any_user(message: Message, bot: TeleBot):
     """
@@ -41,7 +42,7 @@ def dm(message: Message, bot: TeleBot):
 
     markup = types.ForceReply(selective=False)
 
-    msg = bot.send_message(message.chat.id, "Write your datamatrix data", reply_markup=markup, reply_to_message_id=message.id)
+    bot.send_message(message.chat.id, "Write your datamatrix data", reply_markup=markup, reply_to_message_id=message.id)
     bot.register_next_step_handler(message, dm_data, bot)
 
 def dm_data(message: Message, bot:TeleBot, app=None):
@@ -66,7 +67,7 @@ def qr(message: Message, bot: TeleBot):
                InlineKeyboardButton("WhatsApp", callback_data="whatsapp"))
     markup.row(InlineKeyboardButton("Cancel", callback_data="cancel"))
 
-    msg = bot.send_message(message.chat.id, "What kind of content will your QR code have?", reply_markup=markup, reply_to_message_id=message.id)
+    bot.send_message(message.chat.id, "What kind of content will your QR code have?", reply_markup=markup, reply_to_message_id=message.id)
 
 def qr_kind_content(call: CallbackQuery, bot: TeleBot):
     bot.answer_callback_query(call.id, call.data)
@@ -86,12 +87,12 @@ def qr_kind_content(call: CallbackQuery, bot: TeleBot):
 
 def qr_text(message: Message, bot: TeleBot):
     markup = types.ForceReply(selective=False)
-    msg = bot.send_message(message.chat.id, "Write your QR Code data", reply_markup=markup, reply_to_message_id=message.id)
+    bot.send_message(message.chat.id, "Write your QR Code data", reply_markup=markup, reply_to_message_id=message.id)
     bot.register_next_step_handler(message, qr_data, bot)
 
 def qr_wifi_ssid(message: Message, bot: TeleBot):
     markup = types.ForceReply(selective=False)
-    msg = bot.send_message(message.chat.id, "Wi-Fi SSID (network name)", reply_markup=markup, reply_to_message_id=message.id)
+    bot.send_message(message.chat.id, "Wi-Fi SSID (network name)", reply_markup=markup, reply_to_message_id=message.id)
     bot.register_next_step_handler(message, qr_wifi_password, bot)
 
 def qr_wifi_password(message: Message, bot: TeleBot):
@@ -99,7 +100,7 @@ def qr_wifi_password(message: Message, bot: TeleBot):
     data["qr_wifi_ssid"] = message.text
 
     markup = types.ForceReply(selective=False)
-    msg = bot.send_message(message.chat.id, "Wi-Fi password", reply_markup=markup, reply_to_message_id=message.id)
+    bot.send_message(message.chat.id, "Wi-Fi password", reply_markup=markup, reply_to_message_id=message.id)
     bot.register_next_step_handler(message, qr_wifi_encryption, bot)
 
 def qr_wifi_encryption(message: Message, bot: TeleBot):
@@ -113,7 +114,7 @@ def qr_wifi_encryption(message: Message, bot: TeleBot):
                InlineKeyboardButton("WEP", callback_data="wep"))
     markup.row(InlineKeyboardButton("Cancel", callback_data="cancel"))
 
-    msg = bot.send_message(message.chat.id, "Wi-Fi encryption", reply_markup=markup, reply_to_message_id=message.id)
+    bot.send_message(message.chat.id, "Wi-Fi encryption", reply_markup=markup, reply_to_message_id=message.id)
 
 def qr_wifi(call: CallbackQuery, bot: TeleBot):
     bot.answer_callback_query(call.id, call.data)
@@ -134,12 +135,12 @@ def qr_wifi_last_step(call: CallbackQuery, bot: TeleBot):
 
 def qr_telegram(message: Message, bot: TeleBot):
     markup = types.ForceReply(selective=False)
-    msg = bot.send_message(message.chat.id, "Telegram username", reply_markup=markup, reply_to_message_id=message.id)
+    bot.send_message(message.chat.id, "Telegram username", reply_markup=markup, reply_to_message_id=message.id)
     bot.register_next_step_handler(message, qr_data, bot, "telegram")
 
 def qr_whatsapp_number(message: Message, bot: TeleBot):
     markup = types.ForceReply(selective=False)
-    msg = bot.send_message(message.chat.id, "WhatsApp phone number\n\nPattern:\n<country><area><phone without '15'>", reply_markup=markup, reply_to_message_id=message.id)
+    bot.send_message(message.chat.id, "WhatsApp phone number\n\nPattern:\n<country><area><phone without '15'>", reply_markup=markup, reply_to_message_id=message.id)
     bot.register_next_step_handler(message, qr_whatsapp_message, bot)
 
 def qr_whatsapp_message(message: Message, bot: TeleBot):
@@ -147,7 +148,7 @@ def qr_whatsapp_message(message: Message, bot: TeleBot):
     data["qr_whatsapp_number"] = message.text
 
     markup = types.ForceReply(selective=False)
-    msg = bot.send_message(message.chat.id, "WhatsApp predefined message", reply_markup=markup, reply_to_message_id=message.id)
+    bot.send_message(message.chat.id, "WhatsApp predefined message", reply_markup=markup, reply_to_message_id=message.id)
     bot.register_next_step_handler(message, qr_data, bot, "whatsapp")
 
 def qr_data(message: Message, bot:TeleBot, app=None):
@@ -165,7 +166,7 @@ def qr_data(message: Message, bot:TeleBot, app=None):
     markup.add(InlineKeyboardButton("Default", callback_data="default"),
                InlineKeyboardButton("Custom", callback_data="custom"))
     markup.row(InlineKeyboardButton("Cancel", callback_data="cancel"))
-    msg = bot.send_message(message.chat.id, "Select QR Code type", reply_markup=markup, reply_to_message_id=message.id)
+    bot.send_message(message.chat.id, "Select QR Code type", reply_markup=markup, reply_to_message_id=message.id)
 
 def qr_code_type(call: CallbackQuery, bot:TeleBot):
     bot.answer_callback_query(call.id, call.data)
@@ -182,7 +183,7 @@ def qr_code_type(call: CallbackQuery, bot:TeleBot):
                 InlineKeyboardButton("Medium", callback_data="8"),
                 InlineKeyboardButton("Large", callback_data="10"))
         markup.add(InlineKeyboardButton("Cancel", callback_data="cancel"))
-        msg = bot.send_message(call.message.chat.id, "Select size", reply_markup=markup, reply_to_message_id=call.message.id)
+        bot.send_message(call.message.chat.id, "Select size", reply_markup=markup, reply_to_message_id=call.message.id)
     elif call.data == "cancel":
         cancel(call.message, bot, call)
 
@@ -199,7 +200,7 @@ def qrcode_size(call: CallbackQuery, bot: TeleBot):
                InlineKeyboardButton("Red", callback_data="red1"),
                InlineKeyboardButton("Blue", callback_data="blue1"))
     markup.add(InlineKeyboardButton("Cancel", callback_data="cancel"))
-    msg = bot.send_message(call.message.chat.id, f"Select fill color", reply_markup=markup, reply_to_message_id=call.message.id)
+    bot.send_message(call.message.chat.id, f"Select fill color", reply_markup=markup, reply_to_message_id=call.message.id)
     
 def qr_fill_color(call: CallbackQuery, bot: TeleBot):
     bot.answer_callback_query(call.id, call.data)
@@ -214,7 +215,7 @@ def qr_fill_color(call: CallbackQuery, bot: TeleBot):
                InlineKeyboardButton("Red", callback_data="red2"),
                InlineKeyboardButton("Blue", callback_data="blue2"))
     markup.add(InlineKeyboardButton("Cancel", callback_data="cancel"))
-    msg = bot.send_message(call.message.chat.id, f"Select background color", reply_markup=markup, reply_to_message_id=call.message.id)
+    bot.send_message(call.message.chat.id, f"Select background color", reply_markup=markup, reply_to_message_id=call.message.id)
 
 def qr_back_color(call: CallbackQuery, bot: TeleBot):
     bot.answer_callback_query(call.id, call.data)
@@ -231,3 +232,42 @@ def generate_qrcode(message: Message, bot: TeleBot, content=None, box_size=8, bo
     bot.send_chat_action(message.chat.id, "upload_photo")
     bot.send_photo(message.chat.id, open(qrcode, "rb"), caption=f"{data['qr_type'].capitalize()} QR code requested", reply_to_message_id=message.id)
     os.remove(qrcode)
+
+def barcode(message: Message, bot: TeleBot):
+    data["bc_id"] = message.id
+
+    markup = types.ForceReply(selective=False)
+
+    bot.send_message(message.chat.id, "Write your 12-digits barcode data", reply_markup=markup, reply_to_message_id=message.id)
+    bot.register_next_step_handler(message, bc_data, bot)
+
+def bc_data(message: Message, bot:TeleBot, app=None):
+    global data
+    data["bc_message"] = message.text
+
+    bc_image = bc.make_barcode(data["bc_message"])
+    bc_path = os.path.join(BASE_DIR, bc_image)
+    bot.send_chat_action(message.chat.id, "upload_photo")
+    bot.send_photo(message.chat.id, open(bc_path, "rb"), caption=f"Barcode requested", reply_to_message_id=message.id)
+    os.remove(bc_path)
+
+def latex(message: Message, bot:TeleBot, app=None):
+    markup = types.ForceReply(selective=False)
+    bot.send_message(message.chat.id, "To get help, read %s" % "https://en.wikipedia.org/wiki/List_of_mathematical_symbols_by_subject", disable_web_page_preview=True)
+    bot.reply_to(message, "Write your LaTeX formula", reply_markup=markup)
+    bot.register_next_step_handler(message, latex_step, bot)
+
+def latex_step(message: Message, bot:TeleBot, app=None):
+    formula = message.text
+    image = tex.make_formula(formula)
+    bot.send_photo(message.chat.id, open(image, "rb"), reply_to_message_id=message.id)
+    os.remove(image)
+
+def short_url(message: Message, bot: TeleBot):
+    import bitly_api
+
+    BITLY_CLIENT_SECRET = os.getenv("BITLY_CLIENT_SECRET")
+    connection = bitly_api.Connection(access_token=BITLY_CLIENT_SECRET)
+    url = input()
+    shorten_url = connection.shorten(url)
+    bot.send_message(message.chat.id, shorten_url, reply_to_message_id=message.id)

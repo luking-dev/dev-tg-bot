@@ -1,4 +1,7 @@
-from turtle import update
+import subprocess
+import os
+import time
+import pyautogui
 from telebot import TeleBot, logger
 from telebot import types
 from telebot.types import Message, CallbackQuery
@@ -6,17 +9,15 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from addons import cam, mic as miclib
 from .. import config
 from ..config import data, BASE_DIR, MULTIMEDIA_DIR
-import pyautogui
-import os
-import time
 
 def admin_user(message: Message, bot: TeleBot):
-    """
-    You can create a function and use parameter pass_bot.
-    """
+    """Says if you are admin"""
+
     bot.send_message(message.chat.id, "Hello, admin!")
 
 def send_alert(text, bot: TeleBot, photo=None):
+    """Sends an alert to defined channel"""
+
     channel_id = f"-100{config.ALERTS_CHANNEL}"
 
     if photo:
@@ -26,23 +27,29 @@ def send_alert(text, bot: TeleBot, photo=None):
         bot.send_message(channel_id, text)
 
 def test(message: Message, bot: TeleBot):
+    """Tests some feature under development"""
+
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
     markup.add(InlineKeyboardButton("Yes", callback_data="yes"),
                 InlineKeyboardButton("No", callback_data="no"))
     bot.send_message(message.chat.id, "Select an option:", reply_markup=markup)
 
-def callback_test(call: CallbackQuery, bot: TeleBot):
+def _callback_test(call: CallbackQuery, bot: TeleBot):
     bot.answer_callback_query(call.id, call.data)
     bot.send_message(call.message.chat.id, call.data, reply_to_message_id=call.message.id)
 
 def photo(message: Message, bot: TeleBot):
+    """Takes an instant photo from webcam"""
+
     photo = cam.photo()
     bot.send_chat_action(message.chat.id, "upload_photo")
     bot.send_photo(message.chat.id, open(photo, "rb"), caption="Now in living room", reply_to_message_id=message.id)
     os.remove(photo)
 
 def photo_torch(message: Message, bot: TeleBot):
+    """Enables torch and takes a photo"""
+
     cam.torch(True)
     time.sleep(1)
     photo = cam.photo()
@@ -52,6 +59,8 @@ def photo_torch(message: Message, bot: TeleBot):
     os.remove(photo)
 
 def photo_nightvision(message: Message, bot: TeleBot):
+    """Takes a photo with nightvision"""
+
     cam.nightvision(True)
     time.sleep(1)
     photo = cam.photo()
@@ -61,40 +70,56 @@ def photo_nightvision(message: Message, bot: TeleBot):
     os.remove(photo)
 
 def enable_torch(message: Message, bot: TeleBot):
+    """Turns torch on"""
+    
     cam.torch(True)
     bot.reply_to(message, "Torch enabled")
 
 def disable_torch(message: Message, bot: TeleBot):
+    """Turns torch off"""
+
     cam.torch(False)
     bot.reply_to(message, "Torch disabled")
 
 def nightvision_on(message: Message, bot: TeleBot):
+    """Turns nightvision on"""
+
     cam.nightvision(True)
     bot.reply_to(message, "Nightvision enabled")
 
 def nightvision_off(message: Message, bot: TeleBot):
+    """Turns nightvision off"""
+
     cam.nightvision(False)
     bot.reply_to(message, "Nightvision disabled")
 
 def photo_dual(message: Message, bot: TeleBot):
+    """Takes a photo with and without nightvision"""
+
     photo(message)
     photo_nightvision(message)
 
 def start_video(message: Message, bot: TeleBot):
+    """Starts video recording"""
+
     cam.record_video(True)
     bot.reply_to(message, "Recording video...")
 
 def stop_video(message: Message, bot: TeleBot):
+    """Stops video recording"""
+
     cam.record_video(False)
     bot.reply_to(message, "Video record stopped")
 
 def mic(message: Message, bot: TeleBot):
+    """Record voice from microphone"""
+    
     data["voice_message"] = message.id
     markup = types.ForceReply(selective=False)
     bot.reply_to(message, "How long want you to record? (default: 5)", reply_markup=markup)
-    bot.register_next_step_handler(message, select_unit, bot)
+    bot.register_next_step_handler(message, _select_unit, bot)
 
-def select_unit(message: Message, bot: TeleBot):
+def _select_unit(message: Message, bot: TeleBot):
     global data
     data["mic_long"] = message.text
     markup = InlineKeyboardMarkup()
@@ -104,9 +129,9 @@ def select_unit(message: Message, bot: TeleBot):
                 InlineKeyboardButton("Hours", callback_data="hours"),
                 InlineKeyboardButton("Cancel", callback_data="cancel"))
     bot.send_message(message.chat.id, "Which unit want to you use?", reply_markup=markup)
-    bot.register_next_step_handler(message, select_mic_record_time, bot)
+    bot.register_next_step_handler(message, _select_mic_record_time, bot)
 
-def select_mic_record_time(message: Message, bot: TeleBot):
+def _select_mic_record_time(message: Message, bot: TeleBot):
     global data
     callback = data["callback"]
     unit = data["units"][callback]["text"]
@@ -124,16 +149,20 @@ def select_mic_record_time(message: Message, bot: TeleBot):
     os.remove(voice)
 
 def screenshot(message: Message, bot: TeleBot):
+    """Takes a screenshot"""
+
     pyautogui.screenshot("screenshot.png")
     bot.send_chat_action(message.chat.id, "upload_photo")
     bot.send_photo(message.chat.id, open("screenshot.png", "rb"), caption="Screenshot", reply_to_message_id=message.id)
     os.remove("screenshot.png")
 
-def send_file(message: Message, bot: TeleBot):
-    bot.send_message(message.chat.id, "Send me a message attaching a file")        
-    bot.register_next_step_handler(message, waiting_attach, bot)
+def download_file(message: Message, bot: TeleBot):
+    """Downloads a received file"""
 
-def waiting_attach(message: Message, bot: TeleBot):
+    bot.send_message(message.chat.id, "Send me a message attaching a file")        
+    bot.register_next_step_handler(message, _waiting_attach, bot)
+
+def _waiting_attach(message: Message, bot: TeleBot):
     if message.content_type in ["photo", "audio", "document", "video", "video_note", "voice", "contact"]:
         try:
             if message.content_type == "photo":
@@ -161,3 +190,42 @@ def waiting_attach(message: Message, bot: TeleBot):
     else:
         logger.error("This content are not supported")
         bot.send_message(message.chat.id, f"This content are not supported", reply_to_message_id=message.id)
+
+def teamviewer(message: Message, bot: TeleBot):
+    """Executes TeamViewer and sends credentials"""
+
+    subprocess.Popen("C:\Program Files (x86)\TeamViewer\TeamViewer.exe")
+
+    filename = "teamviewer.png"
+
+    time.sleep(6)
+    
+    screenshot = pyautogui.screenshot(region=(760, 410, 200, 150))
+    screenshot.save(filename)
+    
+    credentials = os.path.join(BASE_DIR, filename)
+    
+    bot.send_photo(message.chat.id, open(credentials, "rb"), caption="TeamViewer has executed", reply_to_message_id=message.id)
+
+    os.remove(filename)
+
+def admin(message: Message, bot: TeleBot):
+    text = ''
+    method_list = _get_methods()
+    exclude = ['admin', ]
+    pairs = [f"<code>{method_name}</code> - {method_doc}" for method_name, method_doc in method_list if method_name not in exclude]
+    for element in pairs:
+        text += f'{element}\n'            
+    
+    bot.send_message(message.chat.id, text, reply_to_message_id=message.id, parse_mode='HTML')
+
+def _get_methods():
+    import inspect
+    method_list = []
+
+    current_module = inspect.getmodule(inspect.currentframe())
+    for name, obj in inspect.getmembers(current_module):
+        if inspect.isfunction(obj) and not name.startswith('_'):
+            method_list.append((name, obj.__doc__))
+    
+    return method_list

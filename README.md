@@ -1,4 +1,4 @@
-# Developers Telegram Bot
+# Development Telegram Bot
  
 Telegram Bot with several features.
 
