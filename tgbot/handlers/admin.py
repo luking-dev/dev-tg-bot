@@ -1,6 +1,3 @@
-import subprocess
-import os
-import time
 import pyautogui
 from telebot import TeleBot, logger
 from telebot import types
@@ -9,6 +6,10 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from addons import cam, mic as miclib
 from .. import config
 from ..config import data, BASE_DIR, MULTIMEDIA_DIR
+import os
+import subprocess
+import time
+import inspect
 
 def admin_user(message: Message, bot: TeleBot):
     """Says if you are admin"""
@@ -211,21 +212,19 @@ def teamviewer(message: Message, bot: TeleBot):
 
 def admin(message: Message, bot: TeleBot):
     text = ''
-    method_list = _get_methods()
-    exclude = ['admin', ]
-    pairs = [f"<code>{method_name}</code> - {method_doc}" for method_name, method_doc in method_list if method_name not in exclude]
+    method_list = _get_methods(exclude=['admin'])
+    pairs = [f"<code>{method_name}</code> - {method_doc}" for method_name, method_doc in method_list]
     for element in pairs:
         text += f'{element}\n'            
     
     bot.send_message(message.chat.id, text, reply_to_message_id=message.id, parse_mode='HTML')
 
-def _get_methods():
-    import inspect
+def _get_methods(exclude=[]):
     method_list = []
 
     current_module = inspect.getmodule(inspect.currentframe())
     for name, obj in inspect.getmembers(current_module):
-        if inspect.isfunction(obj) and not name.startswith('_'):
+        if inspect.isfunction(obj) and not name.startswith('_') and name not in exclude:
             method_list.append((name, obj.__doc__))
     
     return method_list
