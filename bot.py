@@ -2,7 +2,7 @@
 from tgbot.filters.admin_filter import AdminFilter
 
 # handlers
-from tgbot.handlers.admin import admin_user, admin, test, mic,\
+from tgbot.handlers.admin import admin_user, admin, test,\
      photo, photo_torch, photo_nightvision, photo_dual,\
      enable_torch, disable_torch, nightvision_on, nightvision_off,\
      screenshot, download_file, _callback_test, start_video, stop_video,\
