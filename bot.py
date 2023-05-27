@@ -6,7 +6,7 @@ from tgbot.handlers.admin import admin_user, admin, test, mic,\
      photo, photo_torch, photo_nightvision, photo_dual,\
      enable_torch, disable_torch, nightvision_on, nightvision_off,\
      screenshot, download_file, _callback_test, start_video, stop_video,\
-     teamviewer
+     teamviewer, anydesk
 from tgbot.handlers.spam_command import anti_spam
 from tgbot.handlers.user import any_user, cancel, youtube2mp3, dm, barcode,\
      qr, qr_kind_content, qr_wifi_encryption, qr_wifi,\
@@ -68,6 +68,7 @@ def register_handlers():
     bot.register_message_handler(start_video, commands=["start_video"], admin=True, pass_bot=True)
     bot.register_message_handler(stop_video, commands=["stop_video"], admin=True, pass_bot=True)
     bot.register_message_handler(teamviewer, commands=["tw"], admin=True, pass_bot=True)
+    bot.register_message_handler(anydesk, commands=["ad"], admin=True, pass_bot=True)
     bot.register_message_handler(short_url, commands=["short"], admin=True, pass_bot=True)
     bot.register_message_handler(latex, commands=["latex"], admin=True, pass_bot=True)
 

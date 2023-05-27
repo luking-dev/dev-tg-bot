@@ -210,6 +210,13 @@ def teamviewer(message: Message, bot: TeleBot):
 
     os.remove(filename)
 
+def anydesk(message: Message, bot: TeleBot):
+    """Executes AnyDesk to remote administrate PC"""
+
+    subprocess.Popen("C:\Program Files\AnyDesk\AnyDesk.exe")
+    
+    bot.send_message(message.chat.id, "AnyDesk has executed", reply_to_message_id=message.id)
+
 def admin(message: Message, bot: TeleBot):
     text = ''
     method_list = _get_methods(exclude=['admin'])
