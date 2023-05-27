@@ -6,7 +6,7 @@ from tgbot.handlers.admin import admin_user, admin, test,\
      photo, photo_torch, photo_nightvision, photo_dual,\
      enable_torch, disable_torch, nightvision_on, nightvision_off,\
      screenshot, download_file, _callback_test, start_video, stop_video,\
-     teamviewer, anydesk
+     anydesk
 from tgbot.handlers.spam_command import anti_spam
 from tgbot.handlers.user import any_user, cancel, youtube2mp3, dm, barcode,\
      qr, qr_kind_content, qr_wifi_encryption, qr_wifi,\
