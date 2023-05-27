@@ -16,7 +16,6 @@ Levenshtein==0.20.9
 numpy==1.21.6
 pefile==2023.2.7
 Pillow==9.4.0
-PyAudio==0.2.13
 pycparser==2.21
 PyGetWindow==0.0.9
 pyinstaller==5.10.1
