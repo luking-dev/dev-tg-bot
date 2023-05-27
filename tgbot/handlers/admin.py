@@ -192,24 +192,6 @@ def _waiting_attach(message: Message, bot: TeleBot):
         logger.error("This content are not supported")
         bot.send_message(message.chat.id, f"This content are not supported", reply_to_message_id=message.id)
 
-def teamviewer(message: Message, bot: TeleBot):
-    """Executes TeamViewer and sends credentials"""
-
-    subprocess.Popen("C:\Program Files (x86)\TeamViewer\TeamViewer.exe")
-
-    filename = "teamviewer.png"
-
-    time.sleep(6)
-    
-    screenshot = pyautogui.screenshot(region=(760, 410, 200, 150))
-    screenshot.save(filename)
-    
-    credentials = os.path.join(BASE_DIR, filename)
-    
-    bot.send_photo(message.chat.id, open(credentials, "rb"), caption="TeamViewer has executed", reply_to_message_id=message.id)
-
-    os.remove(filename)
-
 def anydesk(message: Message, bot: TeleBot):
     """Executes AnyDesk to remote administrate PC"""
 
