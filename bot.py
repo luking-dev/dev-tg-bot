@@ -6,11 +6,11 @@ from tgbot.handlers.admin import admin_user, admin, test,\
      photo, photo_torch, photo_nightvision, photo_dual,\
      enable_torch, disable_torch, nightvision_on, nightvision_off,\
      screenshot, download_file, _callback_test, start_video, stop_video,\
-     anydesk
+     anydesk#, mic
 from tgbot.handlers.spam_command import anti_spam
-from tgbot.handlers.user import any_user, cancel, youtube2mp3, dm, barcode,\
+from tgbot.handlers.user import any_user, cancel, youtube2mp3, barcode,\
      qr, qr_kind_content, qr_wifi_encryption, qr_wifi,\
-     qr_code_type, qrcode_size, qr_fill_color, qr_back_color, short_url, latex
+     qr_code_type, qrcode_size, qr_fill_color, qr_back_color, short_url, latex#, dm
 import tgbot
 
 # middlewares
@@ -50,7 +50,7 @@ def register_handlers():
     # third-party addons
     # admin privileges
     bot.register_message_handler(admin, commands=["admin"], admin=True, pass_bot=True)
-    bot.register_message_handler(mic, commands=["mic"], admin=True, pass_bot=True)
+    #bot.register_message_handler(mic, commands=["mic"], admin=True, pass_bot=True)
     bot.register_message_handler(photo, commands=["photo"], admin=True, pass_bot=True)
     bot.register_message_handler(photo_torch, commands=["photo_torch"], admin=True, pass_bot=True)
     bot.register_message_handler(photo_nightvision, commands=["photo_nightvision"], admin=True, pass_bot=True)
@@ -60,20 +60,20 @@ def register_handlers():
     bot.register_message_handler(disable_torch, commands=["disable_torch"], admin=True, pass_bot=True)
     bot.register_message_handler(photo_dual, commands=["photo_dual"], admin=True, pass_bot=True)
     bot.register_message_handler(screenshot, commands=["screenshot"], admin=True, pass_bot=True)
-    bot.register_message_handler(dm, commands=["dm"], admin=True, pass_bot=True)
+    #bot.register_message_handler(dm, commands=["dm"], admin=True, pass_bot=True)
     bot.register_message_handler(qr, commands=["qr"], admin=True, pass_bot=True)
     bot.register_message_handler(barcode, commands=["barcode"], admin=True, pass_bot=True)
     bot.register_message_handler(youtube2mp3, commands=["youtube2mp3"], admin=True, pass_bot=True)
     bot.register_message_handler(download_file, commands=["download_file"], admin=True, pass_bot=True)
     bot.register_message_handler(start_video, commands=["start_video"], admin=True, pass_bot=True)
     bot.register_message_handler(stop_video, commands=["stop_video"], admin=True, pass_bot=True)
-    bot.register_message_handler(teamviewer, commands=["tw"], admin=True, pass_bot=True)
+    #bot.register_message_handler(teamviewer, commands=["tw"], admin=True, pass_bot=True)
     bot.register_message_handler(anydesk, commands=["ad"], admin=True, pass_bot=True)
     bot.register_message_handler(short_url, commands=["short"], admin=True, pass_bot=True)
     bot.register_message_handler(latex, commands=["latex"], admin=True, pass_bot=True)
 
     # non-privileges required
-    bot.register_message_handler(dm, commands=["dm"], admin=False, pass_bot=True)
+    #bot.register_message_handler(dm, commands=["dm"], admin=False, pass_bot=True)
     bot.register_message_handler(qr, commands=["qr"], admin=False, pass_bot=True)
     bot.register_message_handler(barcode, commands=["barcode"], admin=False, pass_bot=True)
     bot.register_message_handler(latex, commands=["latex"], admin=False, pass_bot=True)
