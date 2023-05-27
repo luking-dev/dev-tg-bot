@@ -1,4 +1,3 @@
-import pyautogui
 from telebot import TeleBot, logger
 from telebot import types
 from telebot.types import Message, CallbackQuery
