@@ -5,8 +5,8 @@ from telebot import TeleBot, logger
 from telebot.types import Message, CallbackQuery
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from telebot import types
-from addons import yt2mp3, qr as qrlib, datamatrix, bc, latex as tex
-from barcode.writer import ImageWriter
+from addons import yt2mp3, latex as tex#, qr as qrlib, datamatrix, bc
+#from barcode.writer import ImageWriter
 
 def any_user(message: Message, bot: TeleBot):
     """

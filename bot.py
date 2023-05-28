@@ -61,7 +61,7 @@ def register_handlers():
     bot.register_message_handler(photo_dual, commands=["photo_dual"], admin=True, pass_bot=True)
     bot.register_message_handler(screenshot, commands=["screenshot"], admin=True, pass_bot=True)
     #bot.register_message_handler(dm, commands=["dm"], admin=True, pass_bot=True)
-    bot.register_message_handler(qr, commands=["qr"], admin=True, pass_bot=True)
+    #bot.register_message_handler(qr, commands=["qr"], admin=True, pass_bot=True)
     #bot.register_message_handler(barcode, commands=["barcode"], admin=True, pass_bot=True)
     bot.register_message_handler(youtube2mp3, commands=["youtube2mp3"], admin=True, pass_bot=True)
     bot.register_message_handler(download_file, commands=["download_file"], admin=True, pass_bot=True)
@@ -82,12 +82,12 @@ def register_handlers():
 
     # query handlers 
     bot.register_callback_query_handler(_callback_test, lambda call: call.data in ["yes", "no"], pass_bot=True)
-    bot.register_callback_query_handler(qr_kind_content, lambda call: call.data in ["text", "wifi", "telegram", "whatsapp", "cancel"], pass_bot=True)
-    bot.register_callback_query_handler(qr_wifi, lambda call: call.data in ["open", "wpa", "wep", "cancel"], pass_bot=True)
-    bot.register_callback_query_handler(qr_code_type, lambda call: call.data in ["default", "custom", "cancel"], pass_bot=True)
-    bot.register_callback_query_handler(qrcode_size, lambda call: call.data in ["4", "8", "10", "cancel"], pass_bot=True)
-    bot.register_callback_query_handler(qr_fill_color, lambda call: call.data in ["white1", "black1", "red1", "blue1", "cancel"], pass_bot=True)
-    bot.register_callback_query_handler(qr_back_color, lambda call: call.data in ["white2", "black2", "red2", "blue2", "cancel"], pass_bot=True)
+    #bot.register_callback_query_handler(qr_kind_content, lambda call: call.data in ["text", "wifi", "telegram", "whatsapp", "cancel"], pass_bot=True)
+    #bot.register_callback_query_handler(qr_wifi, lambda call: call.data in ["open", "wpa", "wep", "cancel"], pass_bot=True)
+    #bot.register_callback_query_handler(qr_code_type, lambda call: call.data in ["default", "custom", "cancel"], pass_bot=True)
+    #bot.register_callback_query_handler(qrcode_size, lambda call: call.data in ["4", "8", "10", "cancel"], pass_bot=True)
+    #bot.register_callback_query_handler(qr_fill_color, lambda call: call.data in ["white1", "black1", "red1", "blue1", "cancel"], pass_bot=True)
+    #bot.register_callback_query_handler(qr_back_color, lambda call: call.data in ["white2", "black2", "red2", "blue2", "cancel"], pass_bot=True)
 
 register_handlers()
 
