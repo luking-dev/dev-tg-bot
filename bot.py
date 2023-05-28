@@ -8,9 +8,9 @@ from tgbot.handlers.admin import admin_user, admin, test,\
      screenshot, download_file, _callback_test, start_video, stop_video,\
      anydesk#, mic
 from tgbot.handlers.spam_command import anti_spam
-from tgbot.handlers.user import any_user, cancel, youtube2mp3, barcode,\
-     qr, qr_kind_content, qr_wifi_encryption, qr_wifi,\
-     qr_code_type, qrcode_size, qr_fill_color, qr_back_color, short_url, latex#, dm
+from tgbot.handlers.user import any_user, cancel, youtube2mp3, short_url, latex
+     #qr, qr_kind_content, qr_wifi_encryption, qr_wifi,\
+     #qr_code_type, qrcode_size, qr_fill_color, qr_back_color#, barcode, dm
 import tgbot
 
 # middlewares
@@ -62,7 +62,7 @@ def register_handlers():
     bot.register_message_handler(screenshot, commands=["screenshot"], admin=True, pass_bot=True)
     #bot.register_message_handler(dm, commands=["dm"], admin=True, pass_bot=True)
     bot.register_message_handler(qr, commands=["qr"], admin=True, pass_bot=True)
-    bot.register_message_handler(barcode, commands=["barcode"], admin=True, pass_bot=True)
+    #bot.register_message_handler(barcode, commands=["barcode"], admin=True, pass_bot=True)
     bot.register_message_handler(youtube2mp3, commands=["youtube2mp3"], admin=True, pass_bot=True)
     bot.register_message_handler(download_file, commands=["download_file"], admin=True, pass_bot=True)
     bot.register_message_handler(start_video, commands=["start_video"], admin=True, pass_bot=True)
@@ -74,8 +74,8 @@ def register_handlers():
 
     # non-privileges required
     #bot.register_message_handler(dm, commands=["dm"], admin=False, pass_bot=True)
-    bot.register_message_handler(qr, commands=["qr"], admin=False, pass_bot=True)
-    bot.register_message_handler(barcode, commands=["barcode"], admin=False, pass_bot=True)
+    #bot.register_message_handler(qr, commands=["qr"], admin=False, pass_bot=True)
+    #bot.register_message_handler(barcode, commands=["barcode"], admin=False, pass_bot=True)
     bot.register_message_handler(latex, commands=["latex"], admin=False, pass_bot=True)
     bot.register_message_handler(youtube2mp3, commands=["youtube2mp3"], admin=False, pass_bot=True)
     bot.register_message_handler(short_url, commands=["short"], admin=False, pass_bot=True)
