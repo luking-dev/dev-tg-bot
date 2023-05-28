@@ -2,7 +2,7 @@ from telebot import TeleBot, logger
 from telebot import types
 from telebot.types import Message, CallbackQuery
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
-#from addons import cam, mic as miclib
+from addons import cam#, mic as miclib
 from .. import config
 from ..config import data, BASE_DIR, MULTIMEDIA_DIR
 import os
