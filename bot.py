@@ -100,6 +100,7 @@ bot.add_custom_filter(AdminFilter())
 def main():
     print(f"\n[+] Running Telegram Bot (@{config.BOT_USERNAME})...")
     # bot.infinity_polling()
+    bot.set_webhook()
     bot.infinity_polling(timeout=10, long_polling_timeout=5)
 
 
