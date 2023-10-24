@@ -4,6 +4,7 @@ Description=Development Telegram Bot
 
 [Service]
 Type=simple
+WorkingDirectory=/home/pi/Documents/develop/dev-tg-bot/
 ExecStart=/bin/bash -c 'source venv/bin/activate && /usr/bin/python3 bot.py'
 User=pi
 Restart=always
