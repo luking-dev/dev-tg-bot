@@ -104,8 +104,18 @@ def photo_dual(message: Message, bot: TeleBot):
 
 def start_video(message: Message, bot: TeleBot):
     """Starts video recording"""
+    
+    args = extract_arg(message.text)
+    tag = None
+    
+    if args:
+        if len(args) == 1:
+            tag = args[0]
+        else:
+            tag = " ".join(args)
+    
+    cam.record_video(True, tag) if tag else cam.record_video(True)
 
-    cam.record_video(True)
     bot.reply_to(message, "Recording video...")
 
 def stop_video(message: Message, bot: TeleBot):
