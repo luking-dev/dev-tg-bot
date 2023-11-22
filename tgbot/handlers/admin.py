@@ -10,6 +10,9 @@ import subprocess
 import time
 import inspect
 
+def extract_arg(arg):
+    return arg.split()[1:]
+
 def admin_user(message: Message, bot: TeleBot):
     """Says if you are admin"""
 
@@ -201,7 +204,7 @@ def anydesk(message: Message, bot: TeleBot):
 def admin(message: Message, bot: TeleBot):
     text = ''
     method_list = _get_methods(exclude=['admin'])
-    pairs = [f"<code>{method_name}</code> - {method_doc}" for method_name, method_doc in method_list]
+    pairs = [f"<code>/{method_name}</code> - {method_doc}" for method_name, method_doc in method_list]
     for element in pairs:
         text += f'{element}\n'            
     
