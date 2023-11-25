@@ -10,6 +10,9 @@ import subprocess
 import time
 import inspect
 
+def extract_arg(arg):
+    return arg.split()[1:]
+
 def admin_user(message: Message, bot: TeleBot):
     """Says if you are admin"""
 
@@ -101,8 +104,18 @@ def photo_dual(message: Message, bot: TeleBot):
 
 def start_video(message: Message, bot: TeleBot):
     """Starts video recording"""
+    
+    args = extract_arg(message.text)
+    tag = None
+    
+    if args:
+        if len(args) == 1:
+            tag = args[0]
+        else:
+            tag = " ".join(args)
+    
+    cam.record_video(True, tag) if tag else cam.record_video(True)
 
-    cam.record_video(True)
     bot.reply_to(message, "Recording video...")
 
 def stop_video(message: Message, bot: TeleBot):
@@ -201,7 +214,7 @@ def anydesk(message: Message, bot: TeleBot):
 def admin(message: Message, bot: TeleBot):
     text = ''
     method_list = _get_methods(exclude=['admin'])
-    pairs = [f"<code>{method_name}</code> - {method_doc}" for method_name, method_doc in method_list]
+    pairs = [f"<code>/{method_name}</code> - {method_doc}" for method_name, method_doc in method_list]
     for element in pairs:
         text += f'{element}\n'            
     
