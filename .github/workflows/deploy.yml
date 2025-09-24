@@ -1,0 +1,21 @@
+name: Deploy
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  remote_command_job:
+    runs-on: ubuntu-latest
+    name: SSH Remote command
+    steps:
+      - name: SSH Deployer
+        uses: msatbsx/ssh-and-run-your-script-on-remote-host@v0.1.1
+        id: runner
+        with:
+          host: ${{ secrets.HOST }}
+          user: pi
+          key: ${{ secrets.KEY }}
+          command: |
+            git pull
+      - name: Get the outputs
+        run: echo "The time was ${{ steps.runner.outputs.time }}"
