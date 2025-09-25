@@ -6,5 +6,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          repository: my-luking-dev/dev-tg-bot
-          token: ${{ github.token }}
+          repository: luking-dev/dev-tg-bot
+          token: ${{ secrets.KEY }}
