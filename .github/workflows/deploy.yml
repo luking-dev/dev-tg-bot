@@ -18,5 +18,6 @@ jobs:
           script: |
             cd ~/dev/dev-tg-bot/
             git pull origin main
-            # Comandos adicionales para reiniciar tu servicio, como por ejemplo:
-            # sudo systemctl restart tu_servicio_en_la_pi
+
+            # Reiniciar servicio
+            sudo systemctl restart tgbot.service
