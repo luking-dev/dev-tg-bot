@@ -8,3 +8,15 @@ jobs:
         with:
           repository: luking-dev/dev-tg-bot
           token: ${{ secrets.KEY }}
+
+      - name: Deploy to Raspberry Pi
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.PI_HOST }}
+          username: ${{ secrets.PI_USER }}
+          key: ${{ secrets.PI_KEY }}
+          script: |
+            cd ~/dev/dev-tg-bot/
+            git pull origin main
+            # Comandos adicionales para reiniciar tu servicio, como por ejemplo:
+            # sudo systemctl restart tu_servicio_en_la_pi
