@@ -4,9 +4,9 @@ Description=Development Telegram Bot
 
 [Service]
 Type=simple
-User=root
-Group=root
-ExecStart=/bin/bash -c 'source /home/pi/Documents/develop/dev-tg-bot/venv/bin/activate;/home/pi/Documents/develop/dev-tg-bot/venv/bin/python /home/pi/Documents/develop/dev-tg-bot/bot.py'
+User=pi
+Group=pi
+ExecStart=/bin/bash -c 'source /home/pi/dev/dev-tg-bot/venv/bin/activate;/home/pi/Documents/develop/dev-tg-bot/venv/bin/python /home/pi/Documents/develop/dev-tg-bot/bot.py'
 Restart=always
 
 [Install]
